@@ -1,3 +1,5 @@
+import Libro from "../../libros/domain/LIbro";
+
 export default interface Usuario{
     id:number,
     nombre:string,
@@ -6,5 +8,5 @@ export default interface Usuario{
     password:string,
     email:string,
     news:boolean,
-    libros?:Array<any>
+    libros?:Array<Libro>
 }
