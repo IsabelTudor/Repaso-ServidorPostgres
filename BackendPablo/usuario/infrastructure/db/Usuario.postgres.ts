@@ -18,14 +18,14 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository{
             }
             usuarios.push(usuarioCogido)
         }
-        throw new Error("Method not implemented.");
+        return usuariosFromDB
     }
 /*TODO {
     hasta que no te traigas los libros por el id del usuario no puedes hacer los get
 }*/
     async getUsuarioPorId(id: number): Promise<Usuario | undefined> {
         try{
-        const sql=`SELECT * FROM public.usuarios where id='${id}'`
+        const sql=`SELECT * FROM usuarios where id='${id}'`
         const usuariosFromDB:any[]=await executeQuery(sql);
         if(!usuariosFromDB) return undefined;
         if(usuariosFromDB.length>0){
@@ -47,18 +47,18 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository{
     }
 
     async createUsuario(usuario: Usuario): Promise<Usuario[] | undefined> {
-        const sql=`INSERT INTO public.usuarios( nombre, apellidos, usuario, password, email, news) VALUES ( '${usuario.nombre}', '${usuario.apellidos}', '${usuario.usuario}', '${usuario.password}', '${usuario.email}', ${usuario.news});`
+        const sql=`INSERT INTO usuarios( nombre, apellidos, usuario, password, email, news) VALUES ( '${usuario.nombre}', '${usuario.apellidos}', '${usuario.usuario}', '${usuario.password}', '${usuario.email}', ${usuario.news});`
         await executeQuery(sql);
         return this.getAllUsuarios()
     }
-    async updateUsuario(id:number, password:string): Promise<Usuario | undefined> {
-        const sql=`UPDATE public.usuarios
+    async updateUsuario(id:number, password:String): Promise<Usuario | undefined> {
+        const sql=`UPDATE usuarios
         SET password='${password}' WHERE id='${id}';`;
         await executeQuery(sql);
         return this.getUsuarioPorId(id);
     }
     async deleteUsuarioPorId(id: number): Promise<Usuario[] | undefined> {
-        const sql=`DELETE FROM public.usuarios
+        const sql=`DELETE FROM usuarios
         WHERE id='${id}';`
         await executeQuery(sql);
         return this.getAllUsuarios();
