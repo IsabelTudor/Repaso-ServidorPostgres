@@ -42,5 +42,33 @@ router.post("/",async(req,res)=>{
         res.status(500).send(error);
     }
 })
+router.put("/prestar/:idLibro/:idUsuario",async(req,res)=>{
+    try{
+        const idLibro=parseInt(req.params.idLibro);
+        const idUsuario=parseInt(req.params.idUsuario);
+        const libroPrestado=await libroUseCases.prestarLibro(idLibro,idUsuario)
+        res.json(libroPrestado)
+    }catch (error){
+        res.status(500).send(error);
+    }
+})
+router.put("/devolver/:idLibro",async(req,res)=>{
+    try{
+        const idLibro=parseInt(req.params.idLibro);
+        const libroDevuelto=await libroUseCases.devolverLibro(idLibro);
+        res.json(libroDevuelto);
+    }catch (error){
+        res.status(500).send(error);
+    }
+})
+router.delete("/:idLibro", async(req,res)=>{
+    try{
+        const idLibro=parseInt(req.params.idLibro);
+        const libroBorrado=await libroUseCases.deleteLibro(idLibro);
+        res.json(libroBorrado);
+    }catch (error){
+        res.status(500).send(error);
+    }
+})
 
 export  {router as routerLibro};

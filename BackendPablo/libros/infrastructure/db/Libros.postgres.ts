@@ -71,15 +71,32 @@ export default class LibroRepositoryPostgres implements LibroRepository{
         }
 
     }
-    prestarLibro(idLibro: number, idUsuario: number): Promise<Libro[] | undefined> {
+    async prestarLibro(idLibro: number, idUsuario: number): Promise<Libro[] | undefined> {
+        try{
+            const sql=`UPDATE libros SET usuario='${idUsuario}' where id='${idLibro}'`;
+            await executeQuery(sql);
+            return this.getAllLibros()
+        }catch{
+            console.error("No se ha podido prestar el libro")
+        }
         
-        throw new Error("Method not implemented.");
     }
-    devolverLibro(idLibro: number): Promise<Libro[] | undefined> {
-        throw new Error("Method not implemented.");
+    async devolverLibro(idLibro: number): Promise<Libro[] | undefined> {
+        try{
+            const sql=`UPDATE libros SET usuario=0 where id='${idLibro}'`
+            await executeQuery(sql);
+            return this.getAllLibros()
+        }catch{
+            console.error("No se ha podido devolver el libro");}
     }
-    deleteLibro(idLibro: number): Promise<Libro | undefined> {
-        throw new Error("Method not implemented.");
+    async deleteLibro(idLibro: number): Promise<Libro | undefined> {
+        try{
+            const sql=`DELETE FROM libros
+            WHERE id='${idLibro}';`
+            await executeQuery(sql);
+            return this.getLibroPorIdLibro(idLibro);
+        }catch{
+            console.error("No se ha podido devolver el libro");}
     }
 
 }

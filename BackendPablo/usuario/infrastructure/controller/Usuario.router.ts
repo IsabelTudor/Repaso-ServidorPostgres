@@ -2,15 +2,18 @@ import express from "express";
 import UsuarioUseCases from "../../application/UsuarioUseCases";
 import UsuarioRepositoryPostgres from "../db/Usuario.postgres";
 import Usuario from "../../domain/Usuario";
+import LibroRepositoryPostgres from "../../../libros/infrastructure/db/Libros.postgres";
 
 
 const router=express.Router();
-const usuarioUseCases:UsuarioUseCases=new UsuarioUseCases(new UsuarioRepositoryPostgres());
+const usuarioUseCases:UsuarioUseCases=new UsuarioUseCases(new UsuarioRepositoryPostgres(),new LibroRepositoryPostgres());
 
 router.get("/",async(req,res)=>{
     try{
         const usuarios=await usuarioUseCases.getAllUsuarios();
-        res.json(usuarios)
+        console.log(usuarios);
+        
+        res.render("usuarios",{usuarios})
     }catch{
         res.status(500).json({ error: "Internal Server Error" });
     }
@@ -39,7 +42,7 @@ router.put("/:id", async(req,res)=>{
     try{
         const usuarioId=parseInt(req.params.id);
         const password=req.body;
-        const usuarioCambiado=await usuarioUseCases.updateUsuario(usuarioId,password);
+        const usuarioCambiado=await usuarioUseCases.updateUsuario(usuarioId,password.password);
         res.status(201).json(usuarioCambiado);
     }catch (error){
         res.status(500).json({error: "Internal Server Error"} );

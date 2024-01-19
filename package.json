@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "nodemon index.ts"
+    "dev": "nodemon index.ts",
+    "swagger": "ts-node ./swagger.ts"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,8 @@
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "nodemon": "^3.0.2",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "swagger-ui-express": "^5.0.0"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +29,8 @@
   "homepage": "https://github.com/IsabelTudor/Repaso-ServidorPostgres#readme",
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/pg": "^8.10.9"
+    "@types/pg": "^8.10.9",
+    "@types/swagger-ui-express": "^4.1.6",
+    "swagger-autogen": "^2.23.7"
   }
 }

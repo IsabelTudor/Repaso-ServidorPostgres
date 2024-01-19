@@ -51,6 +51,7 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository{
         await executeQuery(sql);
         return this.getAllUsuarios()
     }
+
     async updateUsuario(id:number, password:String): Promise<Usuario | undefined> {
         const sql=`UPDATE usuarios
         SET password='${password}' WHERE id='${id}';`;
